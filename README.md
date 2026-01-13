@@ -77,13 +77,26 @@ npm run dev
 npm run build
 npm start
 ```
+
 ---
+
 ### 🧠 Approach & Trade-offs
-Calculation Logic
-To achieve real-time pagination, the editor uses a Height-Based Measurement approach. As content is entered, the editor monitors the pixel height of the document nodes. When the height exceeds the A4 page threshold (calculated at 96 DPI), the content is reflowed into the next page container.
-Trade-offs
-Performance: Heavy DOM recalculation on every keystroke can impact performance on very long documents. I implemented a debounced calculation listener to maintain 60fps typing speed.
-Table Splitting: Splitting table rows across pages is complex in web browsers; the current implementation moves the entire row to the next page if it doesn't fit.
+
+#### 📐 Calculation Logic
+To achieve real-time pagination, the editor uses a **height-based measurement approach**.  
+As content is entered, the editor continuously monitors the rendered pixel height of document nodes.  
+When the height exceeds the A4 page threshold (calculated at **96 DPI**), the overflowing content is reflowed into the next page container.
+
+#### ⚖️ Trade-offs
+
+- **Performance**  
+  Heavy DOM recalculation on every keystroke can impact performance for very long documents.  
+  To address this, pagination calculations are **debounced**, maintaining a smooth typing experience (~60 FPS).
+
+- **Table Splitting**  
+  Splitting table rows across pages is inherently complex in web browsers.  
+  In the current implementation, if a row does not fit in the remaining page space, the **entire row is moved to the next page** to preserve layout integrity.
+
 
 
 
